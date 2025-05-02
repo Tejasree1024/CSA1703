@@ -1,0 +1,38 @@
+print("192371043-o.tejasree")
+import random
+
+class Environment:
+    def __init__(self):
+        
+        self.rooms = {
+            'A': random.choice(['Dirty', 'Clean']),
+            'B': random.choice(['Dirty', 'Clean'])
+        }
+
+class VacuumCleaner:
+    def __init__(self, environment):
+        
+        self.location = 'A'
+        self.environment = environment
+        self.score = 0  
+
+    def clean(self):
+        print("Initial Environment:", self.environment.rooms)
+        for _ in range(2):  
+            if self.environment.rooms[self.location] == 'Dirty':
+                print(f"Room {self.location} is Dirty. Cleaning...")
+                self.environment.rooms[self.location] = 'Clean'
+                self.score += 1  
+            else:
+                print(f"Room {self.location} is already Clean.")
+
+            
+            self.location = 'B' if self.location == 'A' else 'A'
+            self.score -= 1  
+
+        print("Final Environment:", self.environment.rooms)
+        print("Performance Score:", self.score)
+
+env = Environment()
+agent = VacuumCleaner(env)
+agent.clean()
