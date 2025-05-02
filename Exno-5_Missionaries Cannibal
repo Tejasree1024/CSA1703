@@ -1,0 +1,31 @@
+print("192371043-o.tejasree")
+from collections import deque
+
+def is_valid(m, c):
+    return 0 <= m <= 3 and 0 <= c <= 3 and (m == 0 or m >= c) and (3 - m == 0 or 3 - m >= 3 - c)
+
+def get_successors(m, c, b):
+    moves = [(1,0), (2,0), (0,1), (0,2), (1,1)]
+    for dm, dc in moves:
+        nm, nc, nb = (m - dm, c - dc, 0) if b else (m + dm, c + dc, 1)
+        if is_valid(nm, nc): yield (nm, nc, nb)
+
+def solve():
+    start = (3, 3, 1)
+    queue = deque([(start, [])])
+    visited = set()
+
+    while queue:
+        (m, c, b), path = queue.popleft()
+        if (m, c, b) in visited: continue
+        visited.add((m, c, b))
+        new_path = path + [(m, c, b)]
+        if m == 0 and c == 0 and b == 0:
+            for step in new_path:
+                print(f"Left: M={step[0]} C={step[1]} | Boat={'Left' if step[2] else 'Right'}")
+            return
+        for state in get_successors(m, c, b):
+            queue.append((state, new_path))
+
+if __name__ == "__main__":
+    solve()
