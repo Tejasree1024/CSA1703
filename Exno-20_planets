@@ -1,0 +1,9 @@
+
+planet(mercury, 58, 4879, 0).
+planet(venus, 108, 12104, 0).
+planet(earth, 150, 12742, 1).
+planet(mars, 228, 6779, 2).
+planet(jupiter, 778, 139820, 79).
+planet(saturn, 1430, 116460, 82).
+planet(uranus, 2870, 50724, 27).
+planet(neptune, 4500, 49244, 14).
