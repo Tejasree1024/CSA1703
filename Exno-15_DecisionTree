@@ -1,0 +1,48 @@
+print("192371043-o.tejasree")
+import math
+from collections import Counter
+
+data = [
+    ['Sunny', 'Hot', 'High', 'Weak', 'No'],
+    ['Sunny', 'Hot', 'High', 'Strong', 'No'],
+    ['Overcast', 'Hot', 'High', 'Weak', 'Yes'],
+    ['Rain', 'Mild', 'High', 'Weak', 'Yes'],
+    ['Rain', 'Cool', 'Normal', 'Weak', 'Yes'],
+    ['Rain', 'Cool', 'Normal', 'Strong', 'No'],
+    ['Overcast', 'Cool', 'Normal', 'Strong', 'Yes'],
+    ['Sunny', 'Mild', 'High', 'Weak', 'No'],
+    ['Sunny', 'Cool', 'Normal', 'Weak', 'Yes'],
+    ['Rain', 'Mild', 'Normal', 'Weak', 'Yes'],
+    ['Sunny', 'Mild', 'Normal', 'Strong', 'Yes'],
+    ['Overcast', 'Mild', 'High', 'Strong', 'Yes'],
+    ['Overcast', 'Hot', 'Normal', 'Weak', 'Yes'],
+    ['Rain', 'Mild', 'High', 'Strong', 'No']
+]
+features = ['Outlook', 'Temperature', 'Humidity', 'Wind']
+
+def entropy(rows):
+    total = len(rows)
+    return -sum((p := c/total) * math.log2(p) for c in Counter(r[-1] for r in rows).values())
+
+def split(rows, i, v): return [r for r in rows if r[i] == v]
+
+def best_feature(rows, feats):
+    base = entropy(rows)
+    return max(range(len(feats)), key=lambda i: base - sum(
+        (len(s := split(rows, i, v)) / len(rows)) * entropy(s)
+        for v in set(r[i] for r in rows)
+    ))
+
+def build(rows, feats):
+    labels = [r[-1] for r in rows]
+    if labels.count(labels[0]) == len(labels): return labels[0]
+    if not feats: return Counter(labels).most_common(1)[0][0]
+    i = best_feature(rows, feats)
+    feat = feats[i]
+    tree = {feat: {}}
+    for v in set(r[i] for r in rows):
+        subset = [r[:i] + r[i+1:] for r in split(rows, i, v)]
+        tree[feat][v] = build(subset, feats[:i] + feats[i+1:])
+    return tree
+
+print("Decision Tree:\n", build(data, features))
