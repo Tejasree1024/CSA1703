@@ -1,0 +1,9 @@
+goal(state(_, _, _, yes)).
+
+move(state(P, B, no, no), walk(P, Q), state(Q, B, no, no)) :- P \= Q.
+move(state(P, P, no, no), push(P, Q), state(Q, Q, no, no)) :- P \= Q.
+move(state(P, P, no, no), climb, state(P, P, yes, no)).
+move(state(mid, mid, yes, no), take, state(mid, mid, yes, yes)).
+
+plan(S, []) :- goal(S).
+plan(S, [A|Rest]) :- move(S, A, S1), plan(S1, Rest).
