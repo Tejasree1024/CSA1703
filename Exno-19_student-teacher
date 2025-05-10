@@ -1,0 +1,18 @@
+% student(Name, Subject)
+student(john, math).
+student(alice, physics).
+student(ravi, chemistry).
+student(sita, math).
+student(sam, english).
+
+% teacher(Name, Subject)
+teacher(mr_smith, math).
+teacher(ms_jones, physics).
+teacher(dr_kumar, chemistry).
+teacher(ms_lee, english).
+
+% subject_code(Subject, Code)
+subject_code(math, m101).
+subject_code(physics, p202).
+subject_code(chemistry, c303).
+subject_code(english, e404).
