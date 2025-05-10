@@ -1,0 +1,40 @@
+print("192371043-o.tejasree")
+
+import random, math
+def sigmoid(x): return 1 / (1 + math.exp(-x))
+def sigmoid_deriv(x): return x * (1 - x)
+
+def init_net():
+    return {
+        "hw": [[random.uniform(-1, 1) for _ in range(2)] for _ in range(2)],
+        "hb": [random.uniform(-1, 1) for _ in range(2)],
+        "ow": [random.uniform(-1, 1) for _ in range(2)],
+        "ob": random.uniform(-1, 1)
+    }
+def forward(x, net):
+    h_out = [sigmoid(sum(x[j] * net["hw"][j][i] for j in range(2)) + net["hb"][i]) for i in range(2)]
+    out = sigmoid(sum(h_out[i] * net["ow"][i] for i in range(2)) + net["ob"])
+    return h_out, out
+def train(net, X, Y, epochs=10000, lr=0.1):
+    for _ in range(epochs):
+        for x, y in zip(X, Y):
+            h, o = forward(x, net)
+            d_o = (y - o) * sigmoid_deriv(o)
+            d_h = [d_o * net["ow"][i] * sigmoid_deriv(h[i]) for i in range(2)]
+            for i in range(2): net["ow"][i] += lr * d_o * h[i]
+            net["ob"] += lr * d_o
+            for i in range(2):
+                for j in range(2): net["hw"][i][j] += lr * d_h[j] * x[i]
+            for i in range(2): net["hb"][i] += lr * d_h[i]
+
+def predict(net, X):
+    for x in X:
+        _, o = forward(x, net)
+        print(f"Input: {x} -> Output: {round(o, 3)}")
+X = [[0, 0], [0, 1], [1, 0], [1, 1]]
+Y = [0, 1, 1, 0]
+
+net = init_net()
+train(net, X, Y)
+print("Predictions after training:")
+predict(net, X)
