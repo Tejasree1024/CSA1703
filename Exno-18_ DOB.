@@ -1,0 +1,7 @@
+% Facts: name_dob(Name, Day, Month, Year).
+
+name_dob(john, 15, april, 1990).
+name_dob(alice, 2, june, 1985).
+name_dob(sam, 23, december, 2000).
+name_dob(ravi, 9, august, 1998).
+name_dob(sita, 25, january, 1995).
