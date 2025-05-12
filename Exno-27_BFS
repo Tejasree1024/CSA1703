@@ -1,0 +1,12 @@
+edge(a,b). edge(a,c). edge(b,d). edge(c,e). edge(d,g). edge(e,g).
+h(a,5). h(b,4). h(c,3). h(d,2). h(e,2). h(g,0).
+
+bestfs(G,G,[G]).
+bestfs(S,G,[S|Path]) :-
+    findall(N, edge(S,N), Ns),
+    sort_nodes(Ns, Sorted),
+    member(Nxt, Sorted),
+    bestfs(Nxt,G,Path).
+
+sort_nodes(Ns, Sorted) :-
+    map_list_to_pairs(h, Ns, P), keysort(P, K), pairs_values(K, Sorted).
