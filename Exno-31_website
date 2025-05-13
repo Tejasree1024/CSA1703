@@ -1,0 +1,15 @@
+<h1>My HTML Showcase</h1>
+<p>This section demonstrates anchor tags, heading tags, images, and more.</p>
+
+<h2>Anchor Tag</h2>
+<p>Visit <a href="https://www.wikipedia.org" target="_blank">Wikipedia</a>.</p>
+
+<h2>Image Tag</h2>
+<img src="https://via.placeholder.com/150" alt="Sample Image" />
+
+<h2>Heading Tags</h2>
+<h3>H3 Subheading</h3>
+<h4>H4 Subheading</h4>
+
+<h2>Paragraph Tag</h2>
+<p>This is a paragraph showing how HTML can structure content.</p>
